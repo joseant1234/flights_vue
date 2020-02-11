@@ -2,7 +2,7 @@
   <div>
     <md-autocomplete v-model="selectedAirport" :md-options="airports" @md-changed="getAirports" @md-opened="getAirports">
       <label>Airport</label>
-      <template slot="md-autocomplete-item" slot-scope="{ item }">{{ item.name }}</template>
+      <template slot="md-autocomplete-item" slot-scope="{ item }">{{ item.country }} | {{ item.city }} | {{ item.name }}</template>
     </md-autocomplete>
   </div>
 </template>
@@ -13,6 +13,7 @@
 
 <script>
   import axios from 'axios';
+  import environment from '../environment/environment';
 
   export default {
     name: "AirportAutocomplete",
@@ -27,8 +28,7 @@
             if (!term) {
               resolve([])
             } else {
-              const baseUrl = "http://localhost:3100";
-              axios.get(baseUrl + '/airports', {
+              axios.get(environment.HOST + '/airports', {
                 params: {
                   term
                 }
